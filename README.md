@@ -1,4 +1,4 @@
-# My build for the st
+# My build for the Simple Terminal (st)
 
 Original: [st](https://st.suckless.org/)
 
