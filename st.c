@@ -124,6 +124,7 @@ typedef struct {
 	Line hist[HISTSIZE]; /* history buffer */
 	int histi;    /* history index */
 	int scr;      /* scroll back */
+	int scrmax;   /* max scrolled back history */
 	int *dirty;   /* dirtyness of lines */
 	TCursor c;    /* cursor */
 	int ocx;      /* old cursor col */
@@ -1081,12 +1082,18 @@ kscrollup(const Arg* a)
 
 	if (n < 0)
 		n = term.row + n;
+	if (term.scr + n >= term.scrmax)
+		n = term.scrmax - term.scr;
 
-	if (term.scr <= HISTSIZE-n) {
-		term.scr += n;
-		selscroll(0, n);
-		tfulldirt();
-	}
+/*	fprintf(stderr, "term.scr: %d\nterm.histi: %d\nn: %d\n", term.scr, term.histi, n);
+	fprintf(stderr, "term.top: %d\nterm.bottom: %d\n", term.top, term.bot);
+*/
+
+/*	if (term.scr <= HISTSIZE-n) { */
+	term.scr += n;
+	selscroll(0, n);
+	tfulldirt();
+/*	} */
 }
 
 void
@@ -1125,6 +1132,9 @@ tscrollup(int orig, int n, int copyhist)
 	LIMIT(n, 0, term.bot-orig+1);
 
 	if (copyhist) {
+		if (term.scrmax < HISTSIZE)
+			term.scrmax += 1;
+
 		term.histi = (term.histi + 1) % HISTSIZE;
 		temp = term.hist[term.histi];
 		term.hist[term.histi] = term.line[orig];
