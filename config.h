@@ -5,10 +5,11 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "Liberation Mono:pixelsize=12:antialias=true:autohint=true";
+static char *font = "DejaVu Sans Mono:pixelsize=12:antialias=true:autohint=true";
 /* Spare fonts */
 static char *font2[] = {
-	"DejaVu Sans Mono:pixelsize=12:antialias=true:autohint=true",
+	"DejaVuSansMono Nerd Font:pixelsize=12:antialias=true:autohint=true",
+	"Liberation Mono:pixelsize=12:antialias=true:autohint=true",
 	"Inconsolata:pixelsize=11:antialias=true:autohint=true",
 };
 
